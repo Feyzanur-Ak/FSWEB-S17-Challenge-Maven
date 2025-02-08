@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+
 public class ApiException extends RuntimeException{
 
     private HttpStatus status;

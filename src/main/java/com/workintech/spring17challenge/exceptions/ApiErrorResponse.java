@@ -1,9 +1,15 @@
 package com.workintech.spring17challenge.exceptions;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApiErrorResponse {
 
     private int status;
@@ -11,33 +17,4 @@ public class ApiErrorResponse {
     private long timestamp;
 
 
-    public ApiErrorResponse(int status, String message, long timestamp) {
-        this.status = status;
-        this.message = message;
-        this.timestamp = timestamp;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 }
