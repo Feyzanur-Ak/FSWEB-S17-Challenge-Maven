@@ -1,10 +1,10 @@
 package com.workintech.spring17challenge.contoller;
 
 
-import com.workintech.spring17challenge.model.Course;
-import com.workintech.spring17challenge.model.HighCourseGpa;
-import com.workintech.spring17challenge.model.LowCourseGpa;
-import com.workintech.spring17challenge.model.MediumCourseGpa;
+import com.workintech.spring17challenge.entity.Course;
+import com.workintech.spring17challenge.entity.HighCourseGpa;
+import com.workintech.spring17challenge.entity.LowCourseGpa;
+import com.workintech.spring17challenge.entity.MediumCourseGpa;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

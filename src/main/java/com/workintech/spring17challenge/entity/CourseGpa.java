@@ -1,4 +1,4 @@
-package com.workintech.spring17challenge.model;
+package com.workintech.spring17challenge.entity;
 
 
 import org.springframework.stereotype.Component;
