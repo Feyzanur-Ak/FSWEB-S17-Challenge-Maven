@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/workintech/courses")
+@RequestMapping("/courses")
 public class CourseController {
 
     private List<Course> courses;
@@ -47,36 +47,34 @@ public class CourseController {
                 return course;
             }
         }
-
-        throw new ApiException("Course not found with name" + name, HttpStatus.NOT_FOUND);
-
+        throw new ApiException("Course not found with name " + name, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Course createCourse(@RequestBody Course course) {
-        Course newCourse = new Course(course.getId(), course.getName(), course.getCredit(), course.getGrade(),course.getTotalGpa());
-
-        if (newCourse.getCredit() > 0 && newCourse.getCredit() < 4) {
-            throw new ApiException("Credit değeri geçersiz " + newCourse.getCredit(), HttpStatus.FORBIDDEN);
+        // Eğer credit değeri 1 ile 4 arasında değilse, 400 Bad Request fırlat
+        if (course.getCredit() <= 0 || course.getCredit() > 4) {
+            throw new ApiException("Credit değeri geçersiz: " + course.getCredit(), HttpStatus.BAD_REQUEST);
         }
 
+        // Yeni kurs oluştur
         double totalGpa;
-        if (newCourse.getCredit() <= 2) {
-            totalGpa = newCourse.getGrade().getCoefficient() * newCourse.getCredit() * lowCourseGpa.getGpa();
-        } else if (newCourse.getCredit() == 3) {
-            totalGpa = newCourse.getGrade().getCoefficient() * newCourse.getCredit() * mediumCourseGpa.getGpa();
+        if (course.getCredit() <= 2) {
+            totalGpa = course.getGrade().getCoefficient() * course.getCredit() * lowCourseGpa.getGpa();
+        } else if (course.getCredit() == 3) {
+            totalGpa = course.getGrade().getCoefficient() * course.getCredit() * mediumCourseGpa.getGpa();
         } else {
-            totalGpa = newCourse.getGrade().getCoefficient() * newCourse.getCredit() * highCourseGpa.getGpa();
+            totalGpa = course.getGrade().getCoefficient() * course.getCredit() * highCourseGpa.getGpa();
         }
 
-        newCourse.setTotalGpa(totalGpa);
-        courses.add(newCourse);
-        return newCourse;
+        course.setTotalGpa(totalGpa);
+        courses.add(course);
+        return course;
     }
 
     @PutMapping("/{id}")
     public Course updateCourse(@PathVariable int id, @RequestBody Course course) {
-
         for (Course existingCourse : courses) {
             if (existingCourse.getId() == id) {
                 existingCourse.setId(course.getId());
@@ -95,6 +93,5 @@ public class CourseController {
             }
         }
         throw new ApiException("Course not found with id: " + id, HttpStatus.NOT_FOUND);
-
     }
 }
